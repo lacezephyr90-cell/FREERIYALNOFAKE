@@ -1,49 +1,94 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Access Portal</title>
+  <title>FREE ﷼ **LIFETIME OFFER**</title>
+
   <style>
     body {
-      font-family: Arial;
-      text-align: center;
-      margin-top: 100px;
-      background: #111;
-      color: white;
+      font-family: "Comic Sans MS", cursive;
+      background: black;
+      color: lime;
+      overflow: hidden;
     }
-    input {
+
+    .square {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      opacity: 0.6;
+      animation: move 3s infinite alternate;
+    }
+
+    .green { background: lime; }
+    .purple { background: purple; }
+
+    @keyframes move {
+      0% { transform: translate(0,0) rotate(0deg); }
+      100% { transform: translate(50px, 50px) rotate(180deg); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      margin-top: 200px;
+    }
+
+    input, button {
+      font-family: "Comic Sans MS", cursive;
       padding: 10px;
       margin: 5px;
+      font-size: 18px;
+      border: 2px dashed purple;
+      background: black;
+      color: lime;
     }
-    button {
-      padding: 10px 20px;
-      cursor: pointer;
+
+    button:hover {
+      background: purple;
+      color: lime;
+    }
+
+    h1 {
+      font-size: 40px;
+      text-shadow: 2px 2px purple;
     }
   </style>
 </head>
+
 <body>
 
-<h2>Enter Access Code</h2>
+<!-- CHAOTIC SQUARES -->
+<div class="square green" style="top:20px; left:30px;"></div>
+<div class="square purple" style="top:80px; left:100px;"></div>
+<div class="square green" style="top:200px; left:50px;"></div>
+<div class="square purple" style="top:150px; left:180px;"></div>
+<div class="square green" style="top:300px; left:250px;"></div>
+<div class="square purple" style="top:50px; left:300px;"></div>
 
-<input type="text" id="value1" placeholder="First value">
-<br>
-<input type="text" id="value2" placeholder="Second value">
-<br><br>
+<!-- MAIN CONTENT -->
+<div class="container">
+  <h1>ENTER THE CHAOS</h1>
 
-<button onclick="checkAccess()">Unlock</button>
+  <input type="text" id="value1" placeholder="first???"><br>
+  <input type="text" id="value2" placeholder="second???"><br><br>
 
-<p id="result"></p>
+  <button onclick="checkAccess()">UNLOCK???</button>
+
+  <p id="result"></p>
+</div>
 
 <script>
 function checkAccess() {
-  const v1 = document.getElementById("value1").value;
-  const v2 = document.getElementById("value2").value;
+  const v1 = document.getElementById("value1").value.trim().toLowerCase();
+  const v2 = document.getElementById("value2").value.trim().toLowerCase();
 
   if (v1 === "alpha" && v2 === "beta") {
     window.location.href = "area1.html";
   } else if (v1 === "gamma" && v2 === "delta") {
     window.location.href = "area2.html";
   } else {
-    document.getElementById("result").innerText = "Access denied";
+    document.getElementById("result").innerText = "WRONG!!! TRY AGAIN HUMAN";
   }
 }
 </script>
