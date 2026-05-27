@@ -11,35 +11,36 @@
       overflow: hidden;
     }
 
-    .square {
+    /* ===== BACKGROUND CHAOS (BEHIND EVERYTHING) ===== */
+    .bg-shape {
       position: absolute;
+      opacity: 0.5;
+      z-index: 0;
+      animation: floaty 4s infinite alternate ease-in-out;
+    }
+
+    .square {
       width: 120px;
       height: 120px;
-      opacity: 0.5;
-      animation: move 4s infinite alternate ease-in-out;
-      z-index: 0;
     }
 
     .triangle {
-      position: absolute;
       width: 0;
       height: 0;
       border-left: 60px solid transparent;
       border-right: 60px solid transparent;
       border-bottom: 120px solid;
-      opacity: 0.5;
-      animation: move 4s infinite alternate ease-in-out;
-      z-index: 0;
     }
 
     .green { background: lime; border-bottom-color: lime; }
     .purple { background: purple; border-bottom-color: purple; }
 
-    @keyframes move {
+    @keyframes floaty {
       0% { transform: translate(0,0) rotate(0deg); }
       100% { transform: translate(60px, 40px) rotate(180deg); }
     }
 
+    /* ===== MAIN UI ===== */
     .container {
       position: relative;
       z-index: 10;
@@ -67,68 +68,164 @@
       color: lime;
     }
 
+    /* ===== CAPTCHA ===== */
     .captcha {
       margin-top: 15px;
       padding: 10px;
       border: 2px solid lime;
-      width: 320px;
-      margin: auto;
+      display: inline-block;
     }
 
-    #result {
-      margin-top: 10px;
+    /* ===== VIRUS POPUPS ===== */
+    .virus-popup {
+      position: absolute;
+      width: 220px;
+      background: black;
+      border: 2px solid red;
+      color: lime;
+      font-family: "Comic Sans MS", cursive;
+      box-shadow: 0 0 10px red;
+      z-index: 9999;
+    }
+
+    .virus-header {
+      background: red;
+      color: black;
+      padding: 5px;
+      cursor: grab;
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+    }
+
+    .virus-body {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .close-btn {
+      cursor: pointer;
+      background: black;
+      color: red;
+      border: none;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND CHAOS -->
-<div class="square green" style="top:20px; left:40px;"></div>
-<div class="square purple" style="top:120px; left:180px;"></div>
-<div class="square green" style="top:260px; left:80px;"></div>
-<div class="triangle purple" style="top:80px; left:300px;"></div>
-<div class="triangle green" style="top:200px; left:500px;"></div>
+<!-- BACKGROUND CHAOS SHAPES -->
+<div class="bg-shape square green" style="top:20px; left:40px;"></div>
+<div class="bg-shape square purple" style="top:120px; left:180px;"></div>
+<div class="bg-shape square green" style="top:260px; left:80px;"></div>
+<div class="bg-shape square purple" style="top:320px; left:300px;"></div>
+<div class="bg-shape square green" style="top:80px; left:420px;"></div>
 
-<!-- MAIN -->
+<div class="bg-shape triangle green" style="top:200px; left:500px;"></div>
+<div class="bg-shape triangle purple" style="top:50px; left:250px;"></div>
+<div class="bg-shape triangle green" style="top:350px; left:600px;"></div>
+
+<!-- MAIN CONTENT -->
 <div class="container">
   <h1>UNLOCK LA FREE ﷼ TODAY</h1>
 
-  <input type="text" id="code1" placeholder="code 1???"><br>
-  <input type="text" id="code2" placeholder="code 2???"><br>
+  <input type="text" id="value1" placeholder="first???"><br>
+  <input type="text" id="value2" placeholder="second???"><br>
 
+  <!-- CAPTCHA -->
   <div class="captcha">
-    <p>VERIFY YOU ARE NOT ROBOT</p>
-    <p>Solve: 3 + 4 = ?</p>
-    <input type="text" id="captcha">
+    <p>VERIFY YOU ARE NOT ROBOT:</p>
+    <p>Solve: <b>3 + 4 = ?</b></p>
+    <input type="text" id="captchaInput" placeholder="answer???">
   </div>
 
-  <br>
+  <br><br>
 
-  <button onclick="unlock()">UNLOCK???</button>
+  <button onclick="checkAccess()">UNLOCK???</button>
 
   <p id="result"></p>
 </div>
 
-<script>
-function unlock() {
-  const c1 = document.getElementById("code1").value.trim();
-  const c2 = document.getElementById("code2").value.trim();
-  const cap = document.getElementById("captcha").value.trim();
+<!-- POPUPS -->
+<div id="popupContainer"></div>
 
-  // CAPTCHA FIRST
+<script>
+function checkAccess() {
+  const v1 = document.getElementById("value1").value.trim().toLowerCase();
+  const v2 = document.getElementById("value2").value.trim().toLowerCase();
+  const cap = document.getElementById("captchaInput").value.trim();
+
+  // CAPTCHA FIRST (annoying but easy)
   if (cap !== "7") {
-    document.getElementById("result").innerText = "CAPTCHA FAILED!!!";
+    document.getElementById("result").innerText = "CAPTCHA FAILED!!! HUMAN DETECTED???";
     return;
   }
 
-  // AREA 1 GATE (NOW CORRECTLY IN INDEX)
-  if (c1 === "rekeato" && c2 === "11333802") {
+  if (v1 === "alpha" && v2 === "beta") {
     window.location.href = "area1.html";
+  } else if (v1 === "gamma" && v2 === "delta") {
+    window.location.href = "area2.html";
   } else {
-    document.getElementById("result").innerText = "WRONG CODES!!!";
+    document.getElementById("result").innerText = "WRONG!!! TRY AGAIN HUMAN";
   }
 }
+
+/* ===== VIRUS POPUPS ===== */
+let popupCount = 0;
+
+function spawnPopup() {
+  const popup = document.createElement("div");
+  popup.className = "virus-popup";
+
+  const x = Math.random() * (window.innerWidth - 250);
+  const y = Math.random() * (window.innerHeight - 200);
+
+  popup.style.left = x + "px";
+  popup.style.top = y + "px";
+
+  popup.innerHTML = `
+    <div class="virus-header">
+      VIRUS ALERT #${popupCount++}
+      <button class="close-btn">X</button>
+    </div>
+    <div class="virus-body">
+      SYSTEM COMPROMISED!!!<br>
+      DELETE FILES? (YES)
+    </div>
+  `;
+
+  document.getElementById("popupContainer").appendChild(popup);
+
+  popup.querySelector(".close-btn").onclick = () => popup.remove();
+
+  // drag
+  const header = popup.querySelector(".virus-header");
+  let offsetX = 0, offsetY = 0, isDragging = false;
+
+  header.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    popup.style.left = (e.clientX - offsetX) + "px";
+    popup.style.top = (e.clientY - offsetY) + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+}
+
+// chaos spawn
+setInterval(() => {
+  if (Math.random() < 0.7) spawnPopup();
+}, 2000);
+
+for (let i = 0; i < 3; i++) spawnPopup();
 </script>
 
 </body>
