@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FREE ﷼ **LIFETIME OFFER**</title>
+  <title>free ﷼ *LIFETIME OFFER*</title>
 
   <style>
     body {
@@ -53,6 +53,41 @@
       font-size: 40px;
       text-shadow: 2px 2px purple;
     }
+
+    /* 💀 VIRUS POPUPS */
+    .virus-popup {
+      position: absolute;
+      width: 220px;
+      background: black;
+      border: 2px solid red;
+      color: lime;
+      font-family: "Comic Sans MS", cursive;
+      box-shadow: 0 0 10px red;
+      z-index: 9999;
+    }
+
+    .virus-header {
+      background: red;
+      color: black;
+      padding: 5px;
+      cursor: grab;
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+    }
+
+    .virus-body {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .close-btn {
+      cursor: pointer;
+      background: black;
+      color: red;
+      border: none;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -78,6 +113,9 @@
   <p id="result"></p>
 </div>
 
+<!-- POPUP CONTAINER -->
+<div id="popupContainer"></div>
+
 <script>
 function checkAccess() {
   const v1 = document.getElementById("value1").value.trim().toLowerCase();
@@ -91,6 +129,68 @@ function checkAccess() {
     document.getElementById("result").innerText = "WRONG!!! TRY AGAIN HUMAN";
   }
 }
+
+/* 💀 VIRUS POPUP SYSTEM */
+let popupCount = 0;
+
+function spawnPopup() {
+  const popup = document.createElement("div");
+  popup.className = "virus-popup";
+
+  const x = Math.random() * (window.innerWidth - 250);
+  const y = Math.random() * (window.innerHeight - 200);
+
+  popup.style.left = x + "px";
+  popup.style.top = y + "px";
+
+  popup.innerHTML = `
+    <div class="virus-header">
+      VIRUS ALERT #${popupCount++}
+      <button class="close-btn">X</button>
+    </div>
+    <div class="virus-body">
+      SYSTEM COMPROMISED!!!<br>
+      DELETE FILES? (YES)
+    </div>
+  `;
+
+  document.getElementById("popupContainer").appendChild(popup);
+
+  // close
+  popup.querySelector(".close-btn").onclick = () => {
+    popup.remove();
+  };
+
+  // drag
+  const header = popup.querySelector(".virus-header");
+  let offsetX = 0, offsetY = 0, isDragging = false;
+
+  header.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    header.style.cursor = "grabbing";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    popup.style.left = (e.clientX - offsetX) + "px";
+    popup.style.top = (e.clientY - offsetY) + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+    header.style.cursor = "grab";
+  });
+}
+
+// spawn chaos automatically
+setInterval(() => {
+  if (Math.random() < 0.7) spawnPopup();
+}, 2000);
+
+// initial chaos burst
+for (let i = 0; i < 3; i++) spawnPopup();
 </script>
 
 </body>
