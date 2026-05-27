@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>free ﷼ *LIFETIME OFFER*</title>
+  <title>UNLOCK LA FREE ﷼ TODAY</title>
 
   <style>
     body {
@@ -11,27 +11,46 @@
       overflow: hidden;
     }
 
-    .square {
+    /* ===== BACKGROUND CHAOS (BEHIND EVERYTHING) ===== */
+    .bg-shape {
       position: absolute;
-      width: 150px;
-      height: 150px;
-      opacity: 0.6;
-      animation: move 3s infinite alternate;
+      opacity: 0.5;
+      z-index: 0;
+      animation: floaty 4s infinite alternate ease-in-out;
     }
 
-    .green { background: lime; }
-    .purple { background: purple; }
+    .square {
+      width: 120px;
+      height: 120px;
+    }
 
-    @keyframes move {
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 60px solid transparent;
+      border-right: 60px solid transparent;
+      border-bottom: 120px solid;
+    }
+
+    .green { background: lime; border-bottom-color: lime; }
+    .purple { background: purple; border-bottom-color: purple; }
+
+    @keyframes floaty {
       0% { transform: translate(0,0) rotate(0deg); }
-      100% { transform: translate(50px, 50px) rotate(180deg); }
+      100% { transform: translate(60px, 40px) rotate(180deg); }
     }
 
+    /* ===== MAIN UI ===== */
     .container {
       position: relative;
       z-index: 10;
       text-align: center;
-      margin-top: 200px;
+      margin-top: 120px;
+    }
+
+    h1 {
+      font-size: 40px;
+      text-shadow: 2px 2px purple;
     }
 
     input, button {
@@ -49,12 +68,15 @@
       color: lime;
     }
 
-    h1 {
-      font-size: 40px;
-      text-shadow: 2px 2px purple;
+    /* ===== CAPTCHA ===== */
+    .captcha {
+      margin-top: 15px;
+      padding: 10px;
+      border: 2px solid lime;
+      display: inline-block;
     }
 
-    /* 💀 VIRUS POPUPS */
+    /* ===== VIRUS POPUPS ===== */
     .virus-popup {
       position: absolute;
       width: 220px;
@@ -93,33 +115,52 @@
 
 <body>
 
-<!-- CHAOTIC SQUARES -->
-<div class="square green" style="top:20px; left:30px;"></div>
-<div class="square purple" style="top:80px; left:100px;"></div>
-<div class="square green" style="top:200px; left:50px;"></div>
-<div class="square purple" style="top:150px; left:180px;"></div>
-<div class="square green" style="top:300px; left:250px;"></div>
-<div class="square purple" style="top:50px; left:300px;"></div>
+<!-- BACKGROUND CHAOS SHAPES -->
+<div class="bg-shape square green" style="top:20px; left:40px;"></div>
+<div class="bg-shape square purple" style="top:120px; left:180px;"></div>
+<div class="bg-shape square green" style="top:260px; left:80px;"></div>
+<div class="bg-shape square purple" style="top:320px; left:300px;"></div>
+<div class="bg-shape square green" style="top:80px; left:420px;"></div>
+
+<div class="bg-shape triangle green" style="top:200px; left:500px;"></div>
+<div class="bg-shape triangle purple" style="top:50px; left:250px;"></div>
+<div class="bg-shape triangle green" style="top:350px; left:600px;"></div>
 
 <!-- MAIN CONTENT -->
 <div class="container">
-  <h1>ENTER THE CHAOS</h1>
+  <h1>UNLOCK LA FREE ﷼ TODAY</h1>
 
   <input type="text" id="value1" placeholder="first???"><br>
-  <input type="text" id="value2" placeholder="second???"><br><br>
+  <input type="text" id="value2" placeholder="second???"><br>
+
+  <!-- CAPTCHA -->
+  <div class="captcha">
+    <p>VERIFY YOU ARE NOT ROBOT:</p>
+    <p>Solve: <b>3 + 4 = ?</b></p>
+    <input type="text" id="captchaInput" placeholder="answer???">
+  </div>
+
+  <br><br>
 
   <button onclick="checkAccess()">UNLOCK???</button>
 
   <p id="result"></p>
 </div>
 
-<!-- POPUP CONTAINER -->
+<!-- POPUPS -->
 <div id="popupContainer"></div>
 
 <script>
 function checkAccess() {
   const v1 = document.getElementById("value1").value.trim().toLowerCase();
   const v2 = document.getElementById("value2").value.trim().toLowerCase();
+  const cap = document.getElementById("captchaInput").value.trim();
+
+  // CAPTCHA FIRST (annoying but easy)
+  if (cap !== "7") {
+    document.getElementById("result").innerText = "CAPTCHA FAILED!!! HUMAN DETECTED???";
+    return;
+  }
 
   if (v1 === "alpha" && v2 === "beta") {
     window.location.href = "area1.html";
@@ -130,7 +171,7 @@ function checkAccess() {
   }
 }
 
-/* 💀 VIRUS POPUP SYSTEM */
+/* ===== VIRUS POPUPS ===== */
 let popupCount = 0;
 
 function spawnPopup() {
@@ -156,10 +197,7 @@ function spawnPopup() {
 
   document.getElementById("popupContainer").appendChild(popup);
 
-  // close
-  popup.querySelector(".close-btn").onclick = () => {
-    popup.remove();
-  };
+  popup.querySelector(".close-btn").onclick = () => popup.remove();
 
   // drag
   const header = popup.querySelector(".virus-header");
@@ -169,7 +207,6 @@ function spawnPopup() {
     isDragging = true;
     offsetX = e.clientX - popup.offsetLeft;
     offsetY = e.clientY - popup.offsetTop;
-    header.style.cursor = "grabbing";
   });
 
   document.addEventListener("mousemove", (e) => {
@@ -180,16 +217,14 @@ function spawnPopup() {
 
   document.addEventListener("mouseup", () => {
     isDragging = false;
-    header.style.cursor = "grab";
   });
 }
 
-// spawn chaos automatically
+// chaos spawn
 setInterval(() => {
   if (Math.random() < 0.7) spawnPopup();
 }, 2000);
 
-// initial chaos burst
 for (let i = 0; i < 3; i++) spawnPopup();
 </script>
 
