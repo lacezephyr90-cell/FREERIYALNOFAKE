@@ -1,2 +1,135 @@
-<h1>Welcome to Area 1 🔐</h1>
-<p>You unlocked this with alpha + beta</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AREA 1 // TERMINAL</title>
+
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: "Courier New", monospace;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #terminal {
+      padding: 20px;
+      white-space: pre-wrap;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    #cursor {
+      display: inline-block;
+      width: 10px;
+      background: white;
+      animation: blink 1s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    #prompt {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+<div id="prompt">PRESS ENTER TO CONTINUE</div>
+
+<script>
+const pages = [
+`ENTRY - 1
+
+Running Jim, the complete, utter malevolence of this THING shatters every thought true biological statement ever recorded in history, this THING. Running JIM, can perform parthenogenisis despite being a male and being a mammal 
+(We assume so anyways).`,
+
+`ENTRY - 2
+
+The node responds only when observed.
+
+Operators reported:
+- screen flicker
+- input delay
+- repeated character echo
+
+All logs were overwritten after 11 seconds.`,
+`ENTRY - 3
+
+If you are reading this, you are already inside the system.
+
+Do not attempt to exit.
+Do not attempt to close the session.
+
+The interface is not local anymore.`,
+`END OF FILE
+
+PRESS ENTER TO PROCEED`
+];
+
+let pageIndex = 0;
+let i = 0;
+let typing = false;
+
+const terminal = document.getElementById("terminal");
+
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+// typewriter with punctuation delay
+async function typeText(text) {
+  terminal.innerHTML = "";
+  typing = true;
+
+  for (let char of text) {
+    terminal.innerHTML += char;
+
+    // base speed
+    let delay = 20;
+
+    // slow down punctuation (your request)
+    if (char === ".") delay = 400;
+    if (char === ",") delay = 200;
+    if (char === "\n") delay = 150;
+
+    await sleep(delay);
+  }
+
+  typing = false;
+}
+
+async function showPage() {
+  await typeText(pages[pageIndex]);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !typing) {
+    pageIndex++;
+
+    if (pageIndex >= pages.length) {
+      terminal.innerHTML = "CONNECTION TERMINATED.";
+      document.getElementById("prompt").innerText = "";
+      return;
+    }
+
+    showPage();
+  }
+});
+
+// start first page
+showPage();
+</script>
+
+</body>
+</html>
